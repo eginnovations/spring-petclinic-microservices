@@ -70,7 +70,6 @@ class OwnerController {
     	System.out.println(new java.util.Date() + " SERVICE owner-controller.... METHOD GET on find owner....");
     	Owner owner = new Owner();
 		getMedicines();
-		getOwnerNames();
         return owner;
     }
 
@@ -87,6 +86,7 @@ class OwnerController {
         Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
         Owner[] response = results.toArray(new Owner[results.size()]);
         getOwnerDetails();
+		getOwnerNames();
         return response;
     }
 		
@@ -127,7 +127,7 @@ class OwnerController {
 	}
 	
 	private void getOwnerDetails() {
-		if(isDemo()){
+		if(isDemo() && isCpuCodeSlowEnabled()){
 			boolean keepLooping = true;
 			long timeStart = System.currentTimeMillis();
 			getOwnerAdressDetails(keepLooping,timeStart);		
@@ -221,6 +221,23 @@ class OwnerController {
 		System.out.println("isExternalCallEnabled : "+isExternalCallEnabled);
 		return isExternalCallEnabled;
 	}
+	
+	private boolean isCpuCodeSlowEnabled() {
+		boolean isCpuCodeSlowEnabled = false;
+		try {
+			String demoCpu = System.getenv("DEMO_CPU_MILLIS");
+			if(demoCpu != null && demoCpu.length() > 0) {
+				isCpuCodeSlowEnabled = true;
+			}
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("isCpuCodeSlowEnabled : "+isCpuCodeSlowEnabled);
+		return isCpuCodeSlowEnabled;
+	}
+	
 	private Long getCpuMillis() {
 		Long demoCpu = 5000L;
 		demoCpu = Long.parseLong(System.getenv("DEMO_CPU_MILLIS"));
