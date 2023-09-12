@@ -67,7 +67,7 @@ class OwnerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/owners/find", produces = {"application/json"})
     public Owner initFindForm(Map<String, Object> model) {
-    	System.out.println("SERVICE owner-controller.... METHOD GET on find owner....");
+    	System.out.println(new java.util.Date() + " SERVICE owner-controller.... METHOD GET on find owner....");
     	Owner owner = new Owner();
 		getMedicines();
 		getOwnerNames();
@@ -92,7 +92,7 @@ class OwnerController {
 		
 	
 	public void getMedicines() {
-		if (isDemo()) {
+		if (isDemo() && isExternalCallEnabled()) {
 			try {
 				String medicineUrl = getExternalUrl("http://petclinic-medicines/");
 				URL url = new URL(medicineUrl);
@@ -206,6 +206,21 @@ class OwnerController {
 		return demoUrl;
 	}
 	
+	private boolean isExternalCallEnabled() {
+		boolean isExternalCallEnabled = false;
+		try {
+			String demoUrl = System.getenv("DEMO_EXTERNAL_URL");
+			if(demoUrl != null && demoUrl.length() > 0) {
+				isExternalCallEnabled = true;
+			}
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("isExternalCallEnabled : "+isExternalCallEnabled);
+		return isExternalCallEnabled;
+	}
 	private Long getCpuMillis() {
 		Long demoCpu = 5000L;
 		demoCpu = Long.parseLong(System.getenv("DEMO_CPU_MILLIS"));
