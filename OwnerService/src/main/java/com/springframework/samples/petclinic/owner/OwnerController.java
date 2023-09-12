@@ -116,6 +116,7 @@ class OwnerController {
 	public void getOwnerNames() {
 		if (isDemo() && isSlowSQLQueryEnabled()) {
 			try {
+				getSlowQueryMillis();
 				// logic here
 			}
 			catch (Exception e) {
@@ -178,7 +179,7 @@ class OwnerController {
 			if(demoSQL == null || demoSQL <= 0) {
 				demoSQL = 0.01;
 			}else {
-				demoSQL = demoSQL /1000;
+				demoSQL = demoSQL / 1000;
 			}
 			System.out.println("Final demoSQLMillis: "+demoSQL);
 		}
