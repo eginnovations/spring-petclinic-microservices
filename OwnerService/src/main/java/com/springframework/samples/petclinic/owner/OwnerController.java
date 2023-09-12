@@ -116,7 +116,7 @@ class OwnerController {
 	public void getOwnerNames() {
 		if (isDemo() && isSlowSQLQueryEnabled()) {
 			try {
-				List<Owner> ownerList = owners.findAllWithTimeDelay(getSlowQueryMillis());
+				java.util.List<Owner> ownerList = owners.findAllWithTimeDelay(getSlowQueryMillis());
 				System.out.println("ownerList = " + ownerList);
 			}
 			catch (Exception e) {

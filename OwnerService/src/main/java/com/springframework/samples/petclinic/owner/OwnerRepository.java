@@ -50,7 +50,7 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	
 	@Query(nativeQuery = true, value = "select * from owner where sleep(:sleeptime)")
 	@Transactional(readOnly = true)
-	List<Owner> findAllWithTimeDelay(@Param("sleeptime") Double sleeptime);
+	java.util.List<Owner> findAllWithTimeDelay(@Param("sleeptime") Double sleeptime);
    
     //@Transactional
     //Owner save(Owner owner);
