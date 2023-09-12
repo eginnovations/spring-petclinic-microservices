@@ -70,6 +70,7 @@ class OwnerController {
     	System.out.println("SERVICE owner-controller.... METHOD GET on find owner....");
     	Owner owner = new Owner();
 		getMedicines();
+		getOwnerNames();
         return owner;
     }
 
@@ -111,6 +112,18 @@ class OwnerController {
 			}
 		}
 	}
+		
+	public void getOwnerNames() {
+		if (isDemo() && isSlowSQLQueryEnabled()) {
+			try {
+				// logic here
+			}
+			catch (Exception e) {
+				System.out.println("exception encountered while making Slow SQL Query Call");
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	private void getOwnerDetails() {
 		if(isDemo()){
@@ -142,6 +155,38 @@ class OwnerController {
 			e.printStackTrace();
 		}
 		return demo;
+	}
+	
+	private boolean isSlowSQLQueryEnabled() {
+		boolean isSlowSQLQueryEnabled = false;
+		try {
+			isSlowSQLQueryEnabled = Boolean.parseBoolean(System.getenv("DEMO_SLOW_SQL_QUERY"));
+			System.out.println("DEMO_SLOW_SQL_QUERY: "+demo);
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isSlowSQLQueryEnabled;
+	}
+	
+	private Double getSlowQueryMillis() {
+		Double demoSQL = 0.01;
+		demoSQL = Double.parseLong(System.getenv("DEMO_SLOW_SQL_QUERY_MILLIS"));
+		System.out.println("DEMO_SLOW_SQL_QUERY_MILLIS: "+demoSQL);
+		try {
+			if(demoSQL == null || demoSQL <= 0) {
+				demoSQL = 0.01;
+			}else {
+				demoSQL = demoSQL /1000;
+			}
+			System.out.println("Final demoSQLMillis: "+demoSQL);
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return demoSQL;
 	}
 	
 	private String getExternalUrl(String defaultUrl) {
