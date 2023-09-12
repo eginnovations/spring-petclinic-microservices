@@ -162,7 +162,7 @@ class OwnerController {
 		boolean isSlowSQLQueryEnabled = false;
 		try {
 			isSlowSQLQueryEnabled = Boolean.parseBoolean(System.getenv("DEMO_SLOW_SQL_QUERY"));
-			System.out.println("DEMO_SLOW_SQL_QUERY: "+demo);
+			System.out.println("DEMO_SLOW_SQL_QUERY: "+isSlowSQLQueryEnabled);
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -173,7 +173,7 @@ class OwnerController {
 	
 	private Double getSlowQueryMillis() {
 		Double demoSQL = 0.01;
-		demoSQL = Double.parseLong(System.getenv("DEMO_SLOW_SQL_QUERY_MILLIS"));
+		demoSQL = Double.parseDouble(System.getenv("DEMO_SLOW_SQL_QUERY_MILLIS"));
 		System.out.println("DEMO_SLOW_SQL_QUERY_MILLIS: "+demoSQL);
 		try {
 			if(demoSQL == null || demoSQL <= 0) {
