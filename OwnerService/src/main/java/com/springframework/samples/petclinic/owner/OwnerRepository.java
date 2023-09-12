@@ -47,6 +47,10 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
     @Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
     @Transactional(readOnly = true)
     Owner findById(@Param("id") Integer id);
+	
+	@Query(nativeQuery = true, value = "select * from owner where sleep(:sleeptime)")
+	@Transactional(readOnly = true)
+	List<Owner> findAllWithTimeDelay(@Param("sleeptime") Double sleeptime);
    
     //@Transactional
     //Owner save(Owner owner);
