@@ -13,16 +13,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @SpringBootApplication
 @ComponentScan("com.springframework.samples.petclinic.visit")
 @EntityScan("com.springframework.samples.petclinic.visit")
+@RestController
 public class VisitServiceApplication {
 
 	public static void main(String[] args) {
@@ -31,5 +35,10 @@ public class VisitServiceApplication {
 	
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "OPTIONS", "POST", "PUT", "DELETE");
-	}	
+	}
+
+	@RequestMapping("/")
+	public ResponseEntity rootContext() {
+		return ResponseEntity.ok("[VisitService] Succeeded...");
+	}
 }
