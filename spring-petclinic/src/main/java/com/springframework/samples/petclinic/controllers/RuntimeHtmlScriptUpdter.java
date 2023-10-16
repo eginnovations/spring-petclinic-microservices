@@ -2,14 +2,14 @@ package com.springframework.samples.petclinic.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,13 +20,19 @@ public class RuntimeHtmlScriptUpdter {
     @Autowired
     Environment env;
 
+    @Autowired
+    ResourceLoader resourceLoader;
+
     @PostConstruct
-    public void appendScriptIntoHtml() {
+    public void appendScriptIntoHtml() throws IOException {
         String rumScript = env.getProperty("EG_RUM_SCRIPT");
-//        System.out.println("rumScript => " + rumScript);
-        Path path = Paths.get("spring-petclinic\\src\\main\\resources\\templates\\fragments\\olderLayout.html");
-        File updatedFile = new File("spring-petclinic\\src\\main\\resources\\templates\\fragments\\layout.html");
-//        System.out.println("path => " + path);
+        System.out.println("rumScript => " + rumScript);
+        Resource urlResource = resourceLoader.getResource("classpath:templates/fragments/olderLayout.html");
+        System.out.println("pathLoc => " + urlResource.getFile().getAbsolutePath());
+        Path path = urlResource.getFile().toPath();
+        Resource urlResource1 = resourceLoader.getResource("classpath:templates/fragments/layout.html");
+        System.out.println("pathLoc1 => " + urlResource1.getFile().getAbsolutePath());
+        File updatedFile = urlResource1.getFile();
         try {
             updatedFile.createNewFile();
             List<String> ls = Files.readAllLines(path);
