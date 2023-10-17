@@ -25,6 +25,9 @@ public class RuntimeHtmlScriptUpdter {
 
     @PostConstruct
     public void appendScriptIntoHtml() throws IOException {
+		if(true){
+			return;
+		}
         String rumScript = env.getProperty("EG_RUM_SCRIPT");
         System.out.println("rumScript => " + rumScript);
         Resource urlResource = resourceLoader.getResource("classpath:templates/fragments/olderLayout.html");
