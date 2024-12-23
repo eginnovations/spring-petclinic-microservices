@@ -1,4 +1,5 @@
-FROM java:8-alpine
+#FROM java:8-alpine
+FROM openjdk:8-alpine
 VOLUME /opt/egbtm
 #ADD data /
 COPY target/spring-petclinic-1.5.1.jar /app/

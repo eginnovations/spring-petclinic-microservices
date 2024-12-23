@@ -1,4 +1,4 @@
-FROM java:8-alpine
+FROM openjdk:8-alpine
 VOLUME /opt/egbtm
 #ADD data /
 COPY target/VisitService-0.0.1-SNAPSHOT.jar /app/
